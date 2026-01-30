@@ -5,7 +5,7 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export const authOptions = {
-  session: { 
+  session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
@@ -13,60 +13,52 @@ export const authOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {},
-async authorize(credentials) {
-  try {
-    console.log("authorize called with:", credentials);
+      async authorize(credentials) {
+        try {
+          await connectDB();
+          if (!credentials?.email || !credentials?.password) return null;
 
-    await connectDB();
-    console.log("DB connected");
+          const user = await User.findOne({
+            email: credentials.email.toLowerCase(),
+          }).lean();
 
-    if (!credentials?.email || !credentials?.password) {
-      console.log("Missing email/password");
-      return null;
-    }
+          if (!user) return null;
 
-    const user = await User.findOne({ 
-      email: credentials.email.toLowerCase() 
-    }).lean();   // ← lean() is faster for read-only
+          const isValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isValid) return null;
 
-    if (!user) {
-      console.log("No user found for:", credentials.email);
-      return null;
-    }
-
-    console.log("User found:", user.email, "role:", user.role);
-
-    const isValid = await bcrypt.compare(credentials.password, user.password);
-    console.log("Password valid?", isValid);
-
-    if (!isValid) return null;
-
-    return {
-      id: user._id.toString(),
-      email: user.email,
-      name: user.name || null,
-      role: user.role   // ← this is what matters
-    };
-  } catch (err) {
-    console.error("Authorize crashed:", err);
-    return null;
-  }
-},
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.name || null,
+            role: user.role,
+          };
+        } catch (err) {
+          console.error("Authorize crashed:", err);
+          return null;
+        }
+      },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = user.role;
+      if (user) {
+        token.role = user.role;
+        token.id = user.id; // Persists ID to token
+      }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) session.user.role = token.role;
+      if (session.user) {
+        session.user.role = token.role;
+        session.user.id = token.id; // Persists ID to session
+      }
       return session;
     },
-  },
+  }, // Fixed closing brace for callbacks
   pages: {
     signIn: "/log-in",
-    error: "/log-in", // Redirect back to login on error
+    error: "/log-in",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
