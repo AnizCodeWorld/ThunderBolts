@@ -37,3 +37,8 @@ export async function registerUser(payload) {
     return { error: "Registration failed. Check all fields." };
   }
 }
+
+
+
+
+

@@ -5,24 +5,27 @@ function Navbar() {
   return (
     <>
     {/* --- Navigation --- */}
-      <nav className="flex items-center justify-between px-8 py-6 bg-white shadow-sm">
-        <div className="text-2xl font-bold text-emerald-600">FoodLink</div>
-        <div className="hidden md:flex space-x-8 font-medium">
-          <Link href="#how-it-works" className="hover:text-emerald-600 transition">How it Works</Link>
-          <Link href="#impact" className="hover:text-emerald-600 transition">Our Impact</Link>
-          <Link href="#listings" className="hover:text-emerald-600 transition">Live Listings</Link>
+       <header className="flex justify-between items-center py-3 px-6 md:px-20 bg-white">
+        <div className="flex items-center gap-3">
+            <img src="/logo.jpeg" alt="Logo" style={{width:37}} />
+          <span className="text-2xl font-bold text-green-900">FoodLink</span>
         </div>
-        <div className="flex space-x-4">
-            <Link href={'/log-in'}>
-          <button className="px-5 py-2 text-emerald-600 font-semibold border border-emerald-600 rounded-lg hover:bg-emerald-50 transition">
-            Login
-          </button>
-            </Link>
-          {/* <button className="px-5 py-2 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 shadow-md transition">
-            Join as Donor
-            </button> */}
-        </div>
-      </nav>
+        <nav>
+          <ul className="hidden md:flex items-center gap-8 list-none">
+            <li><a href="/" className="text-gray-700 font-semibold hover:text-amber-500 transition-colors">Home</a></li>
+            <li><a href="/impact" className="text-gray-700 font-semibold hover:text-amber-500 transition-colors">Our Impact</a></li>
+            <li><a href="/knowhow" className="text-gray-700 font-semibold hover:text-amber-500 transition-colors">How it Works</a></li>
+            <li><a href="/about" className="text-gray-700 font-semibold hover:text-amber-500 transition-colors">About Us</a></li>
+            <li>
+              <Link href={'/log-in'}>
+              <button className="bg-amber-500 text-white px-6 py-2.5 rounded-full font-bold hover:bg-amber-600 transition-all">
+                Sign-in
+              </button>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </header>
             </>
   )
 }
