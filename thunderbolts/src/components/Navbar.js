@@ -6,10 +6,12 @@ function Navbar() {
     <>
     {/* --- Navigation --- */}
        <header className="flex justify-between items-center py-3 px-6 md:px-20 bg-white">
+        <Link href={"/"}>
         <div className="flex items-center gap-3">
             <img src="/logo.jpeg" alt="Logo" style={{width:37}} />
           <span className="text-2xl font-bold text-green-900">FoodLink</span>
         </div>
+        </Link>
         <nav>
           <ul className="hidden md:flex items-center gap-8 list-none">
             <li><a href="/" className="text-gray-700 font-semibold hover:text-amber-500 transition-colors">Home</a></li>

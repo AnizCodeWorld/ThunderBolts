@@ -10,6 +10,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Plus, Inbox, Clock, PackageCheck, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import LogoutButton from "@/features/donor/components/LogoutButton";
 
 export default async function DonorDashboard({ searchParams }) {
   const session = await getServerSession(authOptions);
@@ -60,14 +61,18 @@ export default async function DonorDashboard({ searchParams }) {
             </div>
 
             <div className='flex items-center gap-6'>
-              <SearchNGOs />
-              <div
-                title={userEmail}
-                className='h-9 w-9 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center'
-              >
-                <span className='text-emerald-700 font-bold text-sm'>{initial}</span>
-              </div>
-            </div>
+  <SearchNGOs />
+  <div className="flex items-center gap-3">
+    <div
+      title={userEmail}
+      className='h-9 w-9 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center'
+    >
+      <span className='text-emerald-700 font-bold text-sm'>{initial}</span>
+    </div>
+    {/* Add Logout Button Here */}
+    <LogoutButton /> 
+  </div>
+</div>
           </div>
         </nav>
 
