@@ -44,3 +44,58 @@ export async function createListing(prevState, formData) {
     return { error: `Database Error: ${error.message}` };
   }
 }
+
+export async function completeListing(listingId) {
+  const session = await getServerSession(authOptions);
+  if (!session || session.user.role !== "donor") return { error: "Unauthorized" };
+
+  await connectDB();
+
+  try {
+    const updated = await Listing.findOneAndUpdate(
+      { _id: listingId, donorId: session.user.id, status: "claimed" },
+      { $set: { status: "completed" } },
+      { new: true }
+    );
+
+    if (!updated) return { error: "Could not update. Item may not be claimed yet." };
+
+    // This clears the cache for both dashboards instantly
+    revalidatePath("/donor");
+    revalidatePath("/organisation");
+
+    return { success: true };
+  } catch (error) {
+    return { error: "Database error." };
+  }
+}
+export async function completeTransaction(listingId) {
+  try {
+    await connectDB();
+
+    // 1. Update status to 'completed'
+    // This effectively "removes" it from active views because active views 
+    // should filter for status: 'available' or 'pending'
+    const updatedListing = await Listing.findByIdAndUpdate(
+      listingId,
+      { 
+        status: 'completed',
+        completedAt: new Date() 
+      },
+      { new: true }
+    );
+
+    if (!updatedListing) {
+      return { success: false, error: "Listing not found" };
+    }
+
+    // 2. Clear cache for Donor and NGO dashboards
+    revalidatePath("/donor");
+    revalidatePath("/ngo");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Transaction Completion Error:", error);
+    return { success: false, error: "Internal Server Error" };
+  }
+}
