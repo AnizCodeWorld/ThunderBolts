@@ -17,6 +17,7 @@ export default function SearchNGOs() {
       params.delete('query');
     }
 
+    // startTransition keeps the UI responsive while the server re-filters the data
     startTransition(() => {
       router.replace(`/donor?${params.toString()}`);
     });

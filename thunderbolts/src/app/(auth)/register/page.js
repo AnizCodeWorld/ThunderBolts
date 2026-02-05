@@ -82,16 +82,19 @@ export default function RegisterPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input name="registrationNumber" required placeholder="Reg. Number" className="w-full px-4 py-3 border border-slate-300 outline-none" />
-                <input name="ngoDarpanId" placeholder="NGO Darpan ID" className="w-full px-4 py-3 border border-slate-300 outline-none" />
+                <input name="ngoDarpanId" placeholder="NGO Darpan ID (if Available)" className="w-full px-4 py-3 border border-slate-300 outline-none" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input name="reg12A" placeholder="12A Number" className="w-full px-4 py-3 border border-slate-300 outline-none" />
                 <input name="reg80G" placeholder="80G Certificate Number" className="w-full px-4 py-3 border border-slate-300 outline-none" />
               </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input name="phoneNumber" placeholder="Phone Number" className="w-full px-4 py-3 border border-slate-300 outline-none" />
+              <input name="beneficiaryCapacity" type="number" placeholder="Beneficiary Capacity (e.g. 100)" className="w-full px-4 py-3 border border-slate-300 outline-none" />
+              </div>
 
               <textarea name="address" required placeholder="Full Address with PIN Code" className="w-full px-4 py-3 border border-slate-300 outline-none h-24" />
-              <input name="beneficiaryCapacity" type="number" placeholder="Beneficiary Capacity (e.g. 100)" className="w-full px-4 py-3 border border-slate-300 outline-none" />
             </div>
           )}
 

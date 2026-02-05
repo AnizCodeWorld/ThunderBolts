@@ -45,17 +45,18 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-white text-slate-900 font-sans">
       <div className="w-full max-w-md p-8 border border-slate-200">
         {/* Header */}
-        <div className="mb-10 text-center">
+        <div className=" flex justify-center gap-1   items-center">
+          <img src='/logo.jpeg' style={{height:40}}></img>
           <h1 className="text-2xl font-bold tracking-tight uppercase">FoodLink Login</h1>
-          <p className="text-sm text-slate-500 mt-2">Team ThunderBolts • Problem CS01SW</p>
         </div>
+          <p className="text-sm mb-10 text-emerald-500 mt-2 text-center">-- Team ThunderBolts --</p>
 
         {/* Role Selection */}
-        <div className="flex mb-8 border border-slate-900">
+        <div className="flex gap-2 mb-8">
           <button
             type="button"
             onClick={() => setRole('donor')}
-            className={`flex-1 py-3 text-sm font-bold transition-colors ${
+            className={`flex-1 py-3 text-sm font-bold transition-colors border rounded-2xl ${
               role === 'donor' ? 'bg-slate-900 text-white' : 'bg-transparent text-slate-900 hover:bg-slate-50'
             }`}
           >
@@ -64,7 +65,7 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => setRole('ngo')}
-            className={`flex-1 py-3 text-sm font-bold transition-colors ${
+            className={`flex-1 py-3 text-sm font-bold transition-colors border rounded-2xl ${
               role === 'ngo' ? 'bg-slate-900 text-white' : 'bg-transparent text-slate-900 hover:bg-slate-50'
             }`}
           >
